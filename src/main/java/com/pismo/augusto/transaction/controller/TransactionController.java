@@ -28,7 +28,7 @@ public class TransactionController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
+    @GetMapping("/operation-types")
     public ResponseEntity<List<OperationTypeDto>> listOperationTypes() {
         return ResponseEntity.ok(operationTypeService.getOperationTypes().stream().map(type ->  modelMapper.map(type, OperationTypeDto.class)).toList());
     }
