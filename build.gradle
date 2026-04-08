@@ -46,13 +46,25 @@ tasks.named('test') {
 }
 
 tasks.register('unit-test', Test) {
+    description = 'Runs unit tests'
+    group = 'verification'
+
     useJUnitPlatform {
         includeTags 'test-unit'
     }
+
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
 }
 
-tasks.register('integration-test', Test) { Test task ->
-    task.useJUnitPlatform { JUnitPlatformOptions options ->
-        options.includeTags 'integration-test'
+tasks.register('integration-test', Test) {
+    description = 'Runs integration tests'
+    group = 'verification'
+
+    useJUnitPlatform {
+        includeTags 'test-integration'
     }
+
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
 }

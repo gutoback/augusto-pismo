@@ -4,6 +4,7 @@ import com.pismo.augusto.common.config.GlobalExceptionHandler;
 import com.pismo.augusto.common.exception.ErrorDetail;
 import com.pismo.augusto.common.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("test-unit")
@@ -33,6 +35,10 @@ class GlobalExceptionHandlerTest {
     void setUp() {
         webRequest = mock(WebRequest.class);
         httpRequest = mock(HttpServletRequest.class);
+        HttpSession session = mock(HttpSession.class);
+
+        when(httpRequest.getSession()).thenReturn(session);
+        when(session.getId()).thenReturn("test-session-id");
     }
 
     @Test
