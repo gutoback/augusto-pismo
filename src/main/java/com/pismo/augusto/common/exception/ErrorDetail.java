@@ -13,6 +13,6 @@ public class ErrorDetail {
     private int status;
     private Date timestamp;
     private String message;
-    private String detail;
     private String path;
+    private String detail;
 }

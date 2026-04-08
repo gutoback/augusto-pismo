@@ -28,12 +28,20 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({DataIntegrityViolationException.class,ConstraintViolationException.class,
+    @ExceptionHandler({ConstraintViolationException.class,
             MethodArgumentNotValidException.class})
     public ResponseEntity<ErrorDetail> handleBadRequest(Exception ex, WebRequest request, HttpServletRequest httpRequest) {
         logger.error(ex.getMessage(), ex);
         ErrorDetail message = new ErrorDetail(HttpStatus.BAD_REQUEST.value(), new Date(), ex.getMessage(), httpRequest.getRequestURI(), httpRequest.getSession().getId());
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({DataIntegrityViolationException.class,org.hibernate.exception.ConstraintViolationException.class})
+    public ResponseEntity<ErrorDetail> handleBadDatabaseRequest(Exception ex, WebRequest request, HttpServletRequest httpRequest) {
+        logger.error(ex.getMessage(), ex);
+        ErrorDetail message = new ErrorDetail(HttpStatus.BAD_REQUEST.value(), new Date(), "Invalid ID provided", httpRequest.getRequestURI(), httpRequest.getSession().getId());
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+
     }
 
     @ExceptionHandler(Exception.class)
